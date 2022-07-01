@@ -340,6 +340,12 @@ rails server
 
 http://localhost:3000 으로 접속해보세요!
 
+포트를 다르게 하고 싶다면
+
+```bash
+rails server -p [포트번호]
+```
+
 
 
 ## 하나만 더해볼까요?
@@ -412,20 +418,20 @@ end
 ```ruby
 
 Rails.application.routes.draw do
-  get 'welcome/index'
-  root 'welcome#index'
+  get 'home/index'
+  root 'home#index'
 end
 ```
 
 ## 이렇게 작성해봅시다!
 
-root 'welcome#index'` 라는 구문은 레일즈가 애플리케이션의 root를 welcome 컨트롤러의 index action 으로 보내버립니다.
+root 'home#index'` 라는 구문은 레일즈가 애플리케이션의 root를 home 컨트롤러의 index action 으로 보내버립니다.
 
-`get 'welcome/index'` 라는 구문은 레일즈가 http://localhost:3000/welcome/index 접속시 welcome 컨트롤러의 index 액션으로 보내버립니다.
+`get 'home/index'` 라는 구문은 레일즈가 http://localhost:3000/home/index 접속시 home 컨트롤러의 index 액션으로 보내버립니다.
 
-이 구문은 rails generate controller Welcome index 를 실행시에 만들어집니다
+이 구문은 rails generate controller home index 를 실행시에 만들어집니다
 
-이제 http://localhost:3000/ 혹은 http://lcoalhost:3000/welcome/index 로 접속시 동일하게 표시될겁니다
+이제 http://localhost:3000/ 혹은 http://lcoalhost:3000/home/index 로 접속시 동일하게 표시될겁니다
 
 또한, 레일즈는 resources 라는 표준 REST resource 를 정의 할 수 있는 메소드를 제공합니다
 
@@ -461,7 +467,7 @@ rails generate scaffold Post name:string title:string content:text
 >
 >   발판(scaffolding)을 수행하는 작업은 빠르게 진행됩니다. 이 과정에서 생성된 코드는 여러분의 어플리케이션에 완벽하게 적합하지 않을수 있습니다. 대부분의 경우에 생성된 코드를 적절하게 수정하는 작업이 필요합니다. 많은 숙련된 레일즈 개발자들은 발판(scaffolding) 기능을 통해 모든 코드를 생성하거나, 반대로 모든 소스 코드를 손수 만드는 것을 피합니다. 레일즈에서 모델, 컨트롤러, 뷰와 다른 소스 파일들을 적절하게 수정하기가 정말 단순하거든요. 좀 더 자세한 내용은 [레일즈 제너레이터(Generator) 제작과 수정](https://rubykr.github.io/rails_guides/generators.html) 을 참고하세요.
 
-이 명령어를 실행하면 제네레이터는 어플리케이션내 각 디렉토리에 15개의 파일을 생성한답니다.
+이 명령어를 실행하면 제네레이터는 어플리케이션 내 각 디렉토리에 15개의 파일을 생성한답니다.
 
 -   db/migrate/~~~~_create_posts.rb
     -   데이터베이스에 'posts' 테이블을 생성하는 마이그레이션
@@ -558,8 +564,8 @@ rake db:migrate
 
 -   link_to
     -   레일즈의 뷰 헬퍼로 내장된 메소드랍니다.
-    -   텍스트를 기바으로 한 링크를 생성합니다.
-        -   이경우에는 posts_path의 경로겠네요
+    -   텍스트를 기반으로 한 링크를 생성합니다.
+        -   이 경우에는 posts_path의 경로겠네요
 
 >   기본 환경인, 개발(development) 모드에서 레일즈는 브라우저의 매 요청마다 여러분의 어플리케이션을 갱신합니다. 그래서 웹서버를 중지시키거나 재시작할 필요가 없습니다.
 
@@ -647,7 +653,7 @@ rails console
 
 
 
-이부분을 이렇게 바꿔볼까요
+이 부분을 이렇게 바꿔볼까요
 
 ```ruby
 def index
@@ -711,9 +717,9 @@ http://localhost:3000/posts.xml 을 요청하게되면, XML 포맷의 글 목록
 
 이 뷰는 @posts 배열을 순환하며 내용과 링크를 보여준답니다.
 
--   link_to 는 세부 항목에대한 링크를 만듭니다.
+-   link_to 는 세부 항목에 대한 링크를 만듭니다.
 -   edit_post_path 와 new_post_path 는 레일즈가 제공하는 RESTful 라우팅 부분이랍니다.
--   이 헬퍼들의 다양한 모습을 컨트롤러가 포함한 다른 액션들에서 볼수 있답니다.
+-   이 헬퍼들의 다양한 모습을 컨트롤러를 포함한 다른 액션들에서 볼 수 있답니다.
 
 
 >   이번 버전의 레일즈에서는, 반드시 `<%=h post.name %>` 사용해서 페이지에 출력할때 HTML에 적합하도록 변환(escape)해야 했습니다. 레일즈 3.0에서 이것은 기본 값입니다. 만약 변환을 원하지 않는다면 (unescape) `<%= raw post.name %>` 이렇게 사용해 주세요.
@@ -786,7 +792,7 @@ http://localhost:3000/ 으로 접속해보세요!
 
 ## 새 포스트 만들기
 
-새로운 포스트 만들기는 두개의 액션과 관련이있답니다.
+새로운 포스트 만들기는 두 개의 액션과 관련이 있답니다.
 
 
 
@@ -1265,7 +1271,7 @@ rails generate controller Comments
 class CommentsController < ApplicationController
   def create
     @post = Post.find(params[:post_id])
-    @comment = @post.comments.create(params[:comment])
+    @comment = @post.comments.create!(params.require(:comment).permit!) 
     redirect_to post_path(@post)
   end
 end
